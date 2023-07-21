@@ -1,0 +1,32 @@
+{
+  "name": "gwhcp-admin-gui",
+  "private": true,
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxtjs/robots": "^3.0.0",
+    "@sidebase/nuxt-auth": "^0.6.0-beta.3",
+    "@types/node": "^20",
+    "@vee-validate/nuxt": "^4.10.7",
+    "@vee-validate/yup": "^4.10.7",
+    "@vuepic/vue-datepicker": "^5.4.0",
+    "ag-grid-community": "^30.0.5",
+    "ag-grid-vue3": "^30.0.5",
+    "dayjs-nuxt": "^1.1.2",
+    "mitt": "^3.0.1",
+    "npm-check-updates": "^16.10.16",
+    "nuxt": "^3.6.5",
+    "nuxt-gtag": "^0.5.7",
+    "nuxt-simple-sitemap": "^3.0.11",
+    "sass": "^1.64.0",
+    "vue-multiselect": "^3.0.0-beta.2"
+  },
+  "dependencies": {
+  }
+}
