@@ -20,6 +20,20 @@ const { data: auth } = useAuth();
         <div id="store-collapse"
              class="collapse">
             <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li v-if="auth['has_perm']['admin_store_coupon.view_coupon']"
+                    class="ms-3"
+                    data-bs-dismiss="offcanvas"
+                    data-bs-target="#sidebarMenu">
+                    <NuxtLink class="nav-link d-flex align-items-center gap-2"
+                              to="/store/coupon">
+                        <svg class="bi">
+                            <use xlink:href="#tag"/>
+                        </svg>
+
+                        Coupon
+                    </NuxtLink>
+                </li>
+
                 <li v-if="auth['has_perm']['admin_store_fraud.view_fraudstring']"
                     class="ms-3"
                     data-bs-dismiss="offcanvas"

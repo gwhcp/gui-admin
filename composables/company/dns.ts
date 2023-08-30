@@ -20,7 +20,7 @@ interface UseCompanyDnsInterface {
     formSuccess: ComputedRef<boolean>;
     getChoices: () => Promise<void>;
     getNameserverBase: () => Promise<void>;
-    getNameserverDomain: (id: string) => Promise<void>;
+    getNameserverDomain: (domain_id: string) => Promise<void>;
     getSearch: (id: string) => Promise<void>;
     nameserverBase: ComputedRef<string[]>;
     nameserverDomain: ComputedRef<string[]>;
@@ -72,7 +72,7 @@ export const useCompanyDns = (): UseCompanyDnsInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/company/dns/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/company/dns/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localCompanyDns.formErrors = processorErrors.value;
@@ -134,12 +134,12 @@ export const useCompanyDns = (): UseCompanyDnsInterface => {
         loadingState.isActive = false;
     };
 
-    const getNameserverDomain = async (id: string) => {
+    const getNameserverDomain = async (domain_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/company/dns/ns/${id}`, 'GET', null);
+        await doProcess(`admin/company/dns/${domain_id}/ns`, 'GET', null);
 
         localCompanyDns.nameserverDomain = processorObj.value['ns'];
 
@@ -151,7 +151,7 @@ export const useCompanyDns = (): UseCompanyDnsInterface => {
 
         const { doProcess, processorArr } = await useProcessor();
 
-        await doProcess(`admin/company/dns/search/${id}`, 'GET', null);
+        await doProcess(`admin/company/dns/${id}/search`, 'GET', null);
 
         localCompanyDns.formArr = processorArr.value;
 
@@ -201,7 +201,7 @@ export const useCompanyDns = (): UseCompanyDnsInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/company/dns/ns/${id}`, 'PATCH', { ns: ns });
+        await doProcess(`admin/company/dns/${id}/ns`, 'PATCH', { ns: ns });
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);

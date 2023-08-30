@@ -32,7 +32,7 @@ interface UseEmployeeManageInterface {
     getAccessLog: (account_id: string) => Promise<void>;
     getPermissionsBase: () => Promise<void>;
     getPermissionsUser: (account_id: string) => Promise<void>;
-    getProfile: (account_id: string) => Promise<void>;
+    getEdit: (account_id: string) => Promise<void>;
     permissionsBase: ComputedRef<string[]>;
     permissionsUser: ComputedRef<string[]>;
     getSearch: () => Promise<void>;
@@ -81,7 +81,7 @@ export const useEmployeeManage = (): UseEmployeeManageInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/employee/manage/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/employee/manage/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localBillingPayment.formErrors = processorErrors.value;
@@ -121,7 +121,7 @@ export const useEmployeeManage = (): UseEmployeeManageInterface => {
 
         const { doProcess, processorArr } = await useProcessor();
 
-        await doProcess(`admin/employee/manage/accesslog/${account_id}`, 'GET', null);
+        await doProcess(`admin/employee/manage/${account_id}/accesslog`, 'GET', null);
 
         localBillingPayment.formArr = processorArr.value;
 
@@ -157,19 +157,19 @@ export const useEmployeeManage = (): UseEmployeeManageInterface => {
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/employee/manage/permission/${account_id}`, 'GET', null);
+        await doProcess(`admin/employee/manage/${account_id}/permission`, 'GET', null);
 
         localBillingPayment.permissionsUser = processorObj.value['user_permissions'];
 
         loadingState.isActive = false;
     };
 
-    const getProfile = async (account_id: string) => {
+    const getEdit = async (account_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/employee/manage/profile/${account_id}`, 'GET', null);
+        await doProcess(`admin/employee/manage/${account_id}/edit`, 'GET', null);
 
         localBillingPayment.formObj = processorObj.value;
 
@@ -236,7 +236,7 @@ export const useEmployeeManage = (): UseEmployeeManageInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/employee/manage/permission/${id}`, 'PATCH', { 'user_permissions': perms });
+        await doProcess(`admin/employee/manage/${id}/permission`, 'PATCH', { 'user_permissions': perms });
 
         if (!processorSuccess.value) {
             localBillingPayment.formErrors = processorErrors.value;
@@ -261,7 +261,7 @@ export const useEmployeeManage = (): UseEmployeeManageInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/employee/manage/profile/${values['account']}`, 'PATCH', values);
+        await doProcess(`admin/employee/manage/${values['account']}/edit`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -289,7 +289,7 @@ export const useEmployeeManage = (): UseEmployeeManageInterface => {
         getAccessLog,
         getPermissionsBase,
         getPermissionsUser,
-        getProfile,
+        getEdit,
         getSearch,
         permissionsBase,
         permissionsUser,

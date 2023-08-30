@@ -4,7 +4,7 @@ import { number, object, string } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { formObj, getProfile, updateProfile } = useEmployeeManage();
+const { formObj, getEdit, updateProfile } = useEmployeeManage();
 
 const route = useRoute();
 
@@ -27,7 +27,7 @@ definePageMeta({
 });
 
 onMounted(() => {
-    getProfile(route.params['account_id'].toString());
+    getEdit(route.params['account_id'].toString());
 
     hasAccess('admin_employee_manage.view_account');
 

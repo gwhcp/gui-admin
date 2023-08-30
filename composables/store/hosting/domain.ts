@@ -39,8 +39,8 @@ interface UseStoreHostingDomainInterface {
     }>;
     formSuccess: ComputedRef<boolean>;
     getChoices: () => Promise<void>;
-    getProfile: (id: string) => Promise<void>;
-    getResource: (id: string) => Promise<void>;
+    getEdit: (product_id: string) => Promise<void>;
+    getResource: (product_id: string) => Promise<void>;
     getSearch: () => Promise<void>;
     updateProfile: (values: Record<string, string>, actions: {
         setErrors: (arg0: Record<string, unknown>) => void
@@ -93,7 +93,7 @@ export const useStoreHostingDomain = (): UseStoreHostingDomainInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/store/product/domain/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/store/product/domain/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localStoreHostingDomain.formErrors = processorErrors.value;
@@ -136,24 +136,24 @@ export const useStoreHostingDomain = (): UseStoreHostingDomainInterface => {
         localStoreHostingDomain.choices = processorObj.value;
     };
 
-    const getProfile = async (id: string) => {
+    const getEdit = async (product_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/store/product/domain/profile/${id}`, 'GET', null);
+        await doProcess(`admin/store/product/domain/${product_id}/edit`, 'GET', null);
 
         localStoreHostingDomain.formObj = processorObj.value;
 
         loadingState.isActive = false;
     };
 
-    const getResource = async (id: string) => {
+    const getResource = async (product_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/store/product/domain/resource/${id}`, 'GET', null);
+        await doProcess(`admin/store/product/domain/${product_id}/resource`, 'GET', null);
 
         localStoreHostingDomain.formObj = processorObj.value;
 
@@ -215,7 +215,7 @@ export const useStoreHostingDomain = (): UseStoreHostingDomainInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/store/product/domain/profile/${values['product']}`, 'PATCH', values);
+        await doProcess(`admin/store/product/domain/${values['product']}/edit`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -240,7 +240,7 @@ export const useStoreHostingDomain = (): UseStoreHostingDomainInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/store/product/domain/resource/${values['product']}`, 'PATCH', values);
+        await doProcess(`admin/store/product/domain/${values['product']}/resource`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -267,7 +267,7 @@ export const useStoreHostingDomain = (): UseStoreHostingDomainInterface => {
         formObj,
         formSuccess,
         getChoices,
-        getProfile,
+        getEdit,
         getResource,
         getSearch,
         updateProfile,

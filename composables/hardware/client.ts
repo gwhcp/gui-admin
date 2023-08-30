@@ -37,7 +37,7 @@ interface UseHardwareClientInterface {
     }>;
     formSuccess: ComputedRef<boolean>;
     getChoices: () => Promise<void>;
-    getProfile: (server_id: string) => Promise<void>;
+    getEdit: (server_id: string) => Promise<void>;
     getSearch: () => Promise<void>;
     installHardware: (values: { id: string; }) => Promise<boolean>;
     installSuccess: ComputedRef<boolean>;
@@ -90,7 +90,7 @@ export const useHardwareClient = (): UseHardwareClientInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/hardware/client/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/hardware/client/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localHardwareClient.formErrors = processorErrors.value;
@@ -133,12 +133,12 @@ export const useHardwareClient = (): UseHardwareClientInterface => {
         localHardwareClient.choices = processorObj.value;
     };
 
-    const getProfile = async (server_id: string) => {
+    const getEdit = async (server_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/hardware/client/profile/${server_id}`, 'GET', null);
+        await doProcess(`admin/hardware/client/${server_id}/edit`, 'GET', null);
 
         localHardwareClient.formObj = processorObj.value;
 
@@ -162,7 +162,7 @@ export const useHardwareClient = (): UseHardwareClientInterface => {
 
         const { doProcess, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/hardware/client/install/${values['id']}`, 'PATCH', {
+        await doProcess(`admin/hardware/client/${values['id']}/install`, 'PATCH', {
             in_queue: true,
             is_installed: true
         });
@@ -192,8 +192,7 @@ export const useHardwareClient = (): UseHardwareClientInterface => {
         choices: {
             domain: {},
             hardware_target: {},
-            hardware_type: {},
-            web: {}
+            hardware_type: {}
         },
         formArr: [],
         formErrors: {},
@@ -236,7 +235,7 @@ export const useHardwareClient = (): UseHardwareClientInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/hardware/client/profile/${values['server']}`, 'PATCH', values);
+        await doProcess(`admin/hardware/client/${values['server']}/edit`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -263,7 +262,7 @@ export const useHardwareClient = (): UseHardwareClientInterface => {
         formObj,
         formSuccess,
         getChoices,
-        getProfile,
+        getEdit,
         getSearch,
         installHardware,
         installSuccess,

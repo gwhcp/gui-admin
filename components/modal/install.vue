@@ -31,7 +31,13 @@ const props = defineProps({
 
 const router = useRouter();
 
-const modalInstall = () => {
+/**
+ * Function to handle installation of a modal.
+ *
+ * @function modalInstall
+ * @returns {void} - Does not return anything
+ */
+const modalInstall = (): void => {
     const can_install = props.installFunction(props.params);
 
     const msg = can_install.then((result: boolean) => {

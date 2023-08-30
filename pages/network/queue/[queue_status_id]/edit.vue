@@ -2,7 +2,7 @@
         setup>
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { formArr, formErrors, formObj, getProfile, retryQueue } = useNetworkQueue();
+const { formArr, formErrors, formObj, getEdit, retryQueue } = useNetworkQueue();
 
 const route = useRoute();
 
@@ -44,7 +44,7 @@ definePageMeta({
 });
 
 onMounted(() => {
-    getProfile(route.params['queue_status_id'].toString());
+    getEdit(route.params['queue_status_id'].toString());
 
     hasAccess('admin_network_queue.view_queuestatus');
 

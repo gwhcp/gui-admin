@@ -41,7 +41,7 @@ interface UseHardwareCompanyInterface {
     getBaseDomain: () => Promise<void>;
     getChoices: () => Promise<void>;
     getDomain: (id: string) => Promise<void>;
-    getProfile: (server_id: string) => Promise<void>;
+    getEdit: (server_id: string) => Promise<void>;
     getSearch: () => Promise<void>;
     installHardware: (values: { id: string; }) => Promise<boolean>;
     installSuccess: ComputedRef<boolean>;
@@ -99,7 +99,7 @@ export const useHardwareCompany = (): UseHardwareCompanyInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/hardware/company/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/hardware/company/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localHardwareCompany.formErrors = processorErrors.value;
@@ -174,19 +174,19 @@ export const useHardwareCompany = (): UseHardwareCompanyInterface => {
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/hardware/company/domain/${server_id}`, 'GET', null);
+        await doProcess(`admin/hardware/company/${server_id}/domain`, 'GET', null);
 
         localHardwareCompany.domainsAllowed = processorObj.value['allowed'];
 
         loadingState.isActive = false;
     };
 
-    const getProfile = async (server_id: string) => {
+    const getEdit = async (server_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/hardware/company/profile/${server_id}`, 'GET', null);
+        await doProcess(`admin/hardware/company/${server_id}/edit`, 'GET', null);
 
         localHardwareCompany.formObj = processorObj.value;
 
@@ -210,7 +210,7 @@ export const useHardwareCompany = (): UseHardwareCompanyInterface => {
 
         const { doProcess, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/hardware/company/install/${values['id']}`, 'PATCH', { in_queue: true, is_installed: true });
+        await doProcess(`admin/hardware/company/${values['id']}/install`, 'PATCH', { in_queue: true, is_installed: true });
 
         if (!processorSuccess.value) {
             localHardwareCompany.installSuccess = false;
@@ -291,7 +291,7 @@ export const useHardwareCompany = (): UseHardwareCompanyInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/hardware/company/domain/${values['server']}`, 'PATCH', { allowed: values['allowed'] });
+        await doProcess(`admin/hardware/company/${values['server']}/domain`, 'PATCH', { allowed: values['allowed'] });
 
         if (!processorSuccess.value) {
             if ('allowed' in processorErrors.value) {
@@ -321,7 +321,7 @@ export const useHardwareCompany = (): UseHardwareCompanyInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/hardware/company/profile/${values['server']}`, 'PATCH', values);
+        await doProcess(`admin/hardware/company/${values['server']}/edit`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -352,7 +352,7 @@ export const useHardwareCompany = (): UseHardwareCompanyInterface => {
         getChoices,
         getBaseDomain,
         getDomain,
-        getProfile,
+        getEdit,
         getSearch,
         installHardware,
         installSuccess,

@@ -18,7 +18,7 @@ interface UseStorePriceInterface {
         store_product_id: number;
     }>;
     formSuccess: ComputedRef<boolean>;
-    getProfile: (id: string, product_id: string) => Promise<void>;
+    getEdit: (price_id: string, product_id: string) => Promise<void>;
     getSearch: (product_id: string) => Promise<void>;
     updateProfile: (values: Record<string, string>, actions: {
         setErrors: (arg0: Record<string, unknown>) => void
@@ -64,7 +64,7 @@ export const useStorePrice = (): UseStorePriceInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/store/product/price/delete/${values['product_id']}/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/store/product/price/${values['id']}/delete/${values['product_id']}`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localStorePrice.formErrors = processorErrors.value;
@@ -99,12 +99,12 @@ export const useStorePrice = (): UseStorePriceInterface => {
         return localStorePrice.formSuccess;
     });
 
-    const getProfile = async (id: string, product_id: string) => {
+    const getEdit = async (price_id: string, product_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/store/product/price/profile/${product_id}/${id}`, 'GET', null);
+        await doProcess(`admin/store/product/price/${price_id}/edit/${product_id}`, 'GET', null);
 
         localStorePrice.formObj = processorObj.value;
 
@@ -116,7 +116,7 @@ export const useStorePrice = (): UseStorePriceInterface => {
 
         const { doProcess, processorArr } = await useProcessor();
 
-        await doProcess(`admin/store/product/price/search/${product_id}`, 'GET', null);
+        await doProcess(`admin/store/product/price/${product_id}/search`, 'GET', null);
 
         localStorePrice.formArr = processorArr.value;
 
@@ -146,7 +146,7 @@ export const useStorePrice = (): UseStorePriceInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/store/product/price/profile/${values['store_product']}/${values['price_id']}`, 'PATCH', values);
+        await doProcess(`admin/store/product/price/${values['price_id']}/edit/${values['store_product']}`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -171,7 +171,7 @@ export const useStorePrice = (): UseStorePriceInterface => {
         formErrors,
         formObj,
         formSuccess,
-        getProfile,
+        getEdit,
         getSearch,
         updateProfile
     };

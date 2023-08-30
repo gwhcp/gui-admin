@@ -2,7 +2,7 @@
         setup>
 const { hasAccess } = useAuthorization();
 
-const { formObj: domainObj, getProfile } = useCompanyDomain();
+const { formObj: domainObj, getEdit } = useCompanyDomain();
 
 const { deleteMail, formArr, formErrors, getSearch } = useCompanyMail();
 
@@ -31,7 +31,7 @@ definePageMeta({
 });
 
 onMounted(() => {
-    getProfile(route.params['domain_id'].toString());
+    getEdit(route.params['domain_id'].toString());
 
     getSearch(route.params['domain_id'].toString());
 

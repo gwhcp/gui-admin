@@ -4,7 +4,7 @@ import { boolean, object } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { formObj, getProfile, installHardware, installSuccess, updateProfile } = useHardwareCompany();
+const { formObj, getEdit, installHardware, installSuccess, updateProfile } = useHardwareCompany();
 
 const route = useRoute();
 
@@ -18,7 +18,7 @@ definePageMeta({
 });
 
 onMounted(() => {
-    getProfile(route.params['server_id'].toString());
+    getEdit(route.params['server_id'].toString());
 
     hasAccess('admin_hardware_company.view_server');
 

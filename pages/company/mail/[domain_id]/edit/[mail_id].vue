@@ -4,9 +4,9 @@ import { number, object, string } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { formObj: domainObj, getProfile: getDomainProfile } = useCompanyDomain();
+const { formObj: domainObj, getEdit: getDomainEdit } = useCompanyDomain();
 
-const { choices, formObj, getChoices, getProfile, updateProfile } = useCompanyMail();
+const { choices, formObj, getChoices, getEdit, updateProfile } = useCompanyMail();
 
 const route = useRoute();
 
@@ -24,9 +24,9 @@ definePageMeta({
 onMounted(() => {
     getChoices();
 
-    getDomainProfile(route.params['domain_id'].toString());
+    getDomainEdit(route.params['domain_id'].toString());
 
-    getProfile(route.params['domain_id'].toString(), route.params['mail_id'].toString());
+    getEdit(route.params['domain_id'].toString(), route.params['mail_id'].toString());
 
     hasAccess('admin_company_mail.view_mail');
 

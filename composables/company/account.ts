@@ -15,7 +15,7 @@ interface UseCompanyAccountInterface {
         zipcode: string;
     }>;
     formSuccess: ComputedRef<boolean>;
-    getProfile: () => Promise<void>;
+    getEdit: () => Promise<void>;
     updateProfile: (values: Record<string, string>, actions: {
         setErrors: (arg0: Record<string, unknown>) => void
     }) => Promise<void>;
@@ -44,12 +44,12 @@ export const useCompanyAccount = (): UseCompanyAccountInterface => {
         return localCompanyAccount.formSuccess;
     });
 
-    const getProfile = async () => {
+    const getEdit = async () => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess('admin/company/account/profile', 'GET', null);
+        await doProcess('admin/company/account/edit', 'GET', null);
 
         localCompanyAccount.formObj = processorObj.value;
 
@@ -80,7 +80,7 @@ export const useCompanyAccount = (): UseCompanyAccountInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess('admin/company/account/profile', 'PATCH', values);
+        await doProcess('admin/company/account/edit', 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -103,7 +103,7 @@ export const useCompanyAccount = (): UseCompanyAccountInterface => {
         formErrors,
         formObj,
         formSuccess,
-        getProfile,
+        getEdit,
         updateProfile
     };
 };

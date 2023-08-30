@@ -63,7 +63,7 @@ export const useSettingBanned = (): UseSettingBannedInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/setting/banned/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/setting/banned/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localSettingBanned.formErrors = processorErrors.value;

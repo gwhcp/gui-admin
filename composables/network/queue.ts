@@ -7,7 +7,7 @@ interface UseNetworkQueueInterface {
         queue_status: string;
     }>;
     formSuccess: ComputedRef<boolean>;
-    getProfile: (id: string) => Promise<void>;
+    getEdit: (id: string) => Promise<void>;
     getSearch: () => Promise<void>;
     retryQueue: (id: string) => Promise<void>;
 }
@@ -33,12 +33,12 @@ export const useNetworkQueue = (): UseNetworkQueueInterface => {
         return localNetworkQueue.formSuccess;
     });
 
-    const getProfile = async (id: string) => {
+    const getEdit = async (id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/network/queue/profile/${id}`, 'GET', null);
+        await doProcess(`admin/network/queue/${id}/edit`, 'GET', null);
 
         localNetworkQueue.formArr = processorObj.value['queue_items'];
 
@@ -94,7 +94,7 @@ export const useNetworkQueue = (): UseNetworkQueueInterface => {
         formErrors,
         formObj,
         formSuccess,
-        getProfile,
+        getEdit,
         getSearch,
         retryQueue
     };

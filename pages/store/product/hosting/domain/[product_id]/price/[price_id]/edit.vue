@@ -4,7 +4,7 @@ import { boolean, number, object } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { formObj, getProfile, updateProfile } = useStorePrice();
+const { formObj, getEdit, updateProfile } = useStorePrice();
 
 const route = useRoute();
 
@@ -21,7 +21,7 @@ definePageMeta({
 });
 
 onMounted(() => {
-    getProfile(route.params['price_id'].toString(), route.params['product_id'].toString());
+    getEdit(route.params['price_id'].toString(), route.params['product_id'].toString());
 
     hasAccess('admin_store_product_price.view_storeproductprice');
 

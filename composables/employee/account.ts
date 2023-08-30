@@ -14,7 +14,6 @@ interface UseEmployeeAccountInterface {
         date_from: string;
         email: string;
         first_name: string;
-        id: number;
         is_active: boolean;
         is_staff: boolean;
         last_login: null | string;
@@ -31,7 +30,7 @@ interface UseEmployeeAccountInterface {
     formSuccess: ComputedRef<boolean>;
     getAccessLog: () => Promise<void>;
     getChoices: () => Promise<void>;
-    getProfile: () => Promise<void>;
+    getEdit: () => Promise<void>;
     updatePassword: (values: Record<string, string>, actions: {
         setErrors: (arg0: Record<string, unknown>) => void
     }) => Promise<void>;
@@ -87,12 +86,12 @@ export const useEmployeeAccount = (): UseEmployeeAccountInterface => {
         localEmployeeAccount.choices = processorObj.value;
     };
 
-    const getProfile = async () => {
+    const getEdit = async () => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess('admin/employee/account/profile', 'GET', null);
+        await doProcess('admin/employee/account/edit', 'GET', null);
 
         localEmployeeAccount.formObj = processorObj.value;
 
@@ -113,7 +112,6 @@ export const useEmployeeAccount = (): UseEmployeeAccountInterface => {
             date_from: '',
             email: '',
             first_name: '',
-            id: 0,
             is_active: false,
             is_staff: false,
             last_login: null,
@@ -162,7 +160,7 @@ export const useEmployeeAccount = (): UseEmployeeAccountInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess('admin/employee/account/profile', 'PATCH', values);
+        await doProcess('admin/employee/account/edit', 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -188,7 +186,7 @@ export const useEmployeeAccount = (): UseEmployeeAccountInterface => {
         formSuccess,
         getAccessLog,
         getChoices,
-        getProfile,
+        getEdit,
         updatePassword,
         updateProfile
     };

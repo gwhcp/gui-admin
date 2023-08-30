@@ -25,7 +25,7 @@ const { data: auth } = useAuth();
                     data-bs-dismiss="offcanvas"
                     data-bs-target="#sidebarMenu">
                     <NuxtLink class="nav-link d-flex align-items-center gap-2"
-                              to="/">
+                              to="/customer/account">
                         <svg class="bi">
                             <use xlink:href="#user"/>
                         </svg>
@@ -34,12 +34,12 @@ const { data: auth } = useAuth();
                     </NuxtLink>
                 </li>
 
-                <li v-if="auth['has_perm']['admin_customer_billing.view_billingprofile']"
+                <li v-if="auth['has_perm']['admin_customer_billing_profile.view_billingprofile']"
                     class="ms-3"
                     data-bs-dismiss="offcanvas"
                     data-bs-target="#sidebarMenu">
                     <NuxtLink class="nav-link d-flex align-items-center gap-2"
-                              to="/">
+                              to="/customer/billing/profile">
                         <svg class="bi">
                             <use xlink:href="#wallet"/>
                         </svg>
@@ -53,7 +53,7 @@ const { data: auth } = useAuth();
                     data-bs-dismiss="offcanvas"
                     data-bs-target="#sidebarMenu">
                     <NuxtLink class="nav-link d-flex align-items-center gap-2"
-                              to="/">
+                              to="/customer/order">
                         <svg class="bi">
                             <use xlink:href="#gifts"/>
                         </svg>

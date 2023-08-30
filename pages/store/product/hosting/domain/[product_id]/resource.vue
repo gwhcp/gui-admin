@@ -10,7 +10,7 @@ const route = useRoute();
 
 const schema = object({
     bandwidth: number().required().integer(),
-    cron_tab: number().required().integer(),
+    cron_tab: number().when('has_cron', { is: true, then: (schema) => schema.required().integer() }),
     diskspace: number().required().integer(),
     domain: number().required().integer(),
     ftp_user: number().required().integer(),
@@ -60,6 +60,9 @@ useHead({
 
                     <FormHidden v-model="formObj['ipaddress_type']"
                                 name="ipaddress_type"/>
+
+                    <FormHidden v-model="formObj['has_cron']"
+                                name="has_cron"/>
 
                     <FormHidden v-model="formObj['has_mail']"
                                 name="has_mail"/>

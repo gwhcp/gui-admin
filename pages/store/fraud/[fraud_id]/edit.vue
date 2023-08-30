@@ -4,7 +4,7 @@ import { boolean, object } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { formObj, getProfile, updateProfile } = useStoreFraud();
+const { formObj, getEdit, updateProfile } = useStoreFraud();
 
 const route = useRoute();
 
@@ -18,7 +18,7 @@ definePageMeta({
 });
 
 onMounted(() => {
-    getProfile(route.params['fraud_id'].toString());
+    getEdit(route.params['fraud_id'].toString());
 
     hasAccess('admin_store_fraud.view_fraudstring');
 

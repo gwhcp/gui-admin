@@ -20,7 +20,7 @@ interface UseBillingPaymentInterface {
     }>;
     formSuccess: ComputedRef<boolean>;
     getChoices: () => Promise<void>;
-    getProfile: (payment_id: string) => Promise<void>;
+    getEdit: (payment_id: string) => Promise<void>;
     getSearch: () => Promise<void>;
     updateProfile: (values: Record<string, string>, actions: {
         setErrors: (arg0: Record<string, unknown>) => void
@@ -70,7 +70,7 @@ export const useBillingPayment = (): UseBillingPaymentInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/billing/payment/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/billing/payment/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localBillingPayment.formErrors = processorErrors.value;
@@ -113,12 +113,12 @@ export const useBillingPayment = (): UseBillingPaymentInterface => {
         localBillingPayment.choices = processorObj.value;
     };
 
-    const getProfile = async (payment_id: string) => {
+    const getEdit = async (payment_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/billing/payment/profile/${payment_id}`, 'GET', null);
+        await doProcess(`admin/billing/payment/${payment_id}/edit`, 'GET', null);
 
         localBillingPayment.formObj = processorObj.value;
 
@@ -163,7 +163,7 @@ export const useBillingPayment = (): UseBillingPaymentInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/billing/payment/profile/${values['payment']}`, 'PATCH', values);
+        await doProcess(`admin/billing/payment/${values['payment']}/edit`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -190,7 +190,7 @@ export const useBillingPayment = (): UseBillingPaymentInterface => {
         formObj,
         formSuccess,
         getChoices,
-        getProfile,
+        getEdit,
         getSearch,
         updateProfile
     };

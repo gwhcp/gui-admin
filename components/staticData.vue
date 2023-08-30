@@ -7,6 +7,10 @@ const props = defineProps({
         type: Object,
         required: false
     },
+    currency: {
+        type: String,
+        required: false
+    },
     datetime: {
         type: String,
         required: false
@@ -16,6 +20,14 @@ const props = defineProps({
         required: false
     },
     permission: {
+        type: String,
+        required: false
+    },
+    payment_status: {
+        type: String,
+        required: false
+    },
+    product_type: {
         type: String,
         required: false
     },
@@ -36,7 +48,7 @@ const props = defineProps({
 
 <template>
     <div class="mb-2">
-        <h6 class="fw-bold">{{ name }}</h6>
+        <div class="fw-bold">{{ name }}</div>
 
         <div v-if="value && !ahref">
             {{ text_left }} {{ value }} {{ text_right }}
@@ -44,6 +56,24 @@ const props = defineProps({
 
         <div v-if="datetime">
             {{ convertDateTime(datetime) }}
+        </div>
+
+        <div v-if="payment_status">
+            <span v-if="payment_status === 'auth_capture'">Authorize & Capture</span>
+            <span v-if="payment_status === 'refund'">Refund</span>
+            <span v-if="payment_status === 'void'">Voided</span>
+        </div>
+
+        <div v-if="product_type">
+            <span v-if="product_type === 'domain'">Domain Hosting</span>
+            <span v-if="product_type === 'mail'">Mail Hosting</span>
+            <span v-if="product_type === 'mysql'">MySQL Hosting</span>
+            <span v-if="product_type === 'postgresql'">PostgreSQL Hosting</span>
+            <span v-if="product_type === 'private'">Dedicated / Private Hosting</span>
+        </div>
+
+        <div v-if="currency">
+            ${{ currency }}
         </div>
     </div>
 </template>

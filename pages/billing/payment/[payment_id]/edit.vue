@@ -4,7 +4,7 @@ import { boolean, object, string } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { choices, formObj, getChoices, getProfile, updateProfile } = useBillingPayment();
+const { choices, formObj, getChoices, getEdit, updateProfile } = useBillingPayment();
 
 const route = useRoute();
 
@@ -23,7 +23,7 @@ definePageMeta({
 onMounted(() => {
     getChoices();
 
-    getProfile(route.params['payment_id'].toString());
+    getEdit(route.params['payment_id'].toString());
 
     hasAccess('admin_billing_payment.view_paymentgateway');
 

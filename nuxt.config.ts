@@ -1,5 +1,4 @@
 export default defineNuxtConfig({
-    // @ts-ignore
     app: {
         head: {
             link: [
@@ -81,29 +80,6 @@ export default defineNuxtConfig({
             api_title: process.env.NUXT_PUBLIC_API_TITLE,
             api_url: process.env.NUXT_PUBLIC_API_URL,
             gui_url: process.env.NUXT_PUBLIC_GUI_URL
-        }
-    },
-    session: {
-        api: {
-            basePath: '/api/session',
-            isEnabled: true,
-            methods: [
-                'delete',
-                'get',
-                'patch',
-                'post'
-            ]
-        },
-        isEnabled: true,
-        session: {
-            cookieHttpOnly: true,
-            cookieSameSite: 'lax',
-            cookieSecure: true,
-            domain: false,
-            expiryInSeconds: 21600,
-            ipPinning: false,
-            rolling: false,
-            storePrefix: 'sessions'
         }
     },
     site: {

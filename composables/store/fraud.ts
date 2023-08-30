@@ -16,7 +16,7 @@ interface UseStoreFraudInterface {
         name: string;
     }>;
     formSuccess: ComputedRef<boolean>;
-    getProfile: (fraud_id: string) => Promise<void>;
+    getEdit: (fraud_id: string) => Promise<void>;
     getChoices: () => Promise<void>;
     getSearch: () => Promise<void>;
     updateProfile: (values: Record<string, string>, actions: {
@@ -67,7 +67,7 @@ export const useStoreFraud = (): UseStoreFraudInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/store/fraud/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/store/fraud/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localStoreFraud.formErrors = processorErrors.value;
@@ -110,12 +110,12 @@ export const useStoreFraud = (): UseStoreFraudInterface => {
         localStoreFraud.choices = processorObj.value;
     };
 
-    const getProfile = async (fraud_id: string) => {
+    const getEdit = async (fraud_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/store/fraud/profile/${fraud_id}`, 'GET', null);
+        await doProcess(`admin/store/fraud/${fraud_id}/edit`, 'GET', null);
 
         localStoreFraud.formObj = processorObj.value;
 
@@ -155,7 +155,7 @@ export const useStoreFraud = (): UseStoreFraudInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/store/fraud/profile/${values['fraud']}`, 'PATCH', values);
+        await doProcess(`admin/store/fraud/${values['fraud']}/edit`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -182,7 +182,7 @@ export const useStoreFraud = (): UseStoreFraudInterface => {
         formObj,
         formSuccess,
         getChoices,
-        getProfile,
+        getEdit,
         getSearch,
         updateProfile
     };

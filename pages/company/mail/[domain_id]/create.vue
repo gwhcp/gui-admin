@@ -4,7 +4,7 @@ import { number, object, string } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { formObj: domainObj, getProfile } = useCompanyDomain();
+const { formObj: domainObj, getEdit } = useCompanyDomain();
 
 const { choices, createMail, formObj, getChoices } = useCompanyMail();
 
@@ -27,7 +27,7 @@ definePageMeta({
 onMounted(() => {
     getChoices();
 
-    getProfile(route.params['domain_id'].toString());
+    getEdit(route.params['domain_id'].toString());
 
     hasAccess('admin_company_mail.view_mail');
 

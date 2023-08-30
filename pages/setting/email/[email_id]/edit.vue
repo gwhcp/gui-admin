@@ -4,7 +4,7 @@ import { object, string } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { choices, formObj, getChoices, getProfile, updateProfile } = useSettingEmail();
+const { choices, formObj, getChoices, getEdit, updateProfile } = useSettingEmail();
 
 const route = useRoute();
 
@@ -22,7 +22,7 @@ definePageMeta({
 onMounted(() => {
     getChoices();
 
-    getProfile(route.params['email_id'].toString());
+    getEdit(route.params['email_id'].toString());
 
     hasAccess('admin_setting_email.view_emailtemplate');
 

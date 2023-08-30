@@ -63,7 +63,7 @@ export const useBillingReason = (): UseBillingReasonInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/billing/reason/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/billing/reason/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localBillingReason.formErrors = processorErrors.value;
@@ -124,7 +124,6 @@ export const useBillingReason = (): UseBillingReasonInterface => {
         formErrors: {},
         formObj: {
             date_from: '',
-            id: 0,
             is_active: false,
             name: '',
             reason_type: '',

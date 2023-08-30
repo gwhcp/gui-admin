@@ -26,6 +26,17 @@ const route = useRoute();
 
 <template>
     <div class="d-grid gap-2 d-md-flex mb-3">
+        <NuxtLink v-if="hasPerm('admin_company_domain.view_domain')"
+                  to="/company/domain"
+                  class="btn btn-primary"
+                  type="button">
+            <svg class="bi">
+                <use xlink:href="#fingerprint"/>
+            </svg>
+
+            Domains
+        </NuxtLink>
+
         <NuxtLink v-if="route.name == 'company-mail-domain_id' && hasPerm('admin_company_mail.add_mail')"
                   :to="`/company/mail/${route.params['domain_id']}/create`"
                   class="btn btn-success"

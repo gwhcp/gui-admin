@@ -4,7 +4,7 @@ import { boolean, object } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { formObj, getProfile, updateProfile } = useStoreHostingDomain();
+const { formObj, getEdit, updateProfile } = useStoreHostingDomain();
 
 const route = useRoute();
 
@@ -18,7 +18,7 @@ definePageMeta({
 });
 
 onMounted(() => {
-    getProfile(route.params['product_id'].toString());
+    getEdit(route.params['product_id'].toString());
 
     hasAccess('admin_store_product.view_storeproduct');
 

@@ -17,7 +17,7 @@ interface UseCompanyMailInterface {
     }>;
     formSuccess: ComputedRef<boolean>;
     getChoices: () => Promise<void>;
-    getProfile: (domain_id: string, mail_id: string) => Promise<void>;
+    getEdit: (mail_id: string, domain_id: string) => Promise<void>;
     getSearch: (domain_id: string) => Promise<void>;
     updatePassword: (values: Record<string, string>, actions: {
         setErrors: (arg0: Record<string, unknown>) => void
@@ -70,7 +70,7 @@ export const useCompanyMail = (): UseCompanyMailInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/company/mail/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/company/mail/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localCompanyMail.formErrors = processorErrors.value;
@@ -113,12 +113,12 @@ export const useCompanyMail = (): UseCompanyMailInterface => {
         localCompanyMail.choices = processorObj.value;
     };
 
-    const getProfile = async (domain_id: string, mail_id: string) => {
+    const getEdit = async (mail_id: string, domain_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/company/mail/profile/${domain_id}/${mail_id}`, 'GET', null);
+        await doProcess(`admin/company/mail/${mail_id}/edit/${domain_id}`, 'GET', null);
 
         localCompanyMail.formObj = processorObj.value;
 
@@ -130,7 +130,7 @@ export const useCompanyMail = (): UseCompanyMailInterface => {
 
         const { doProcess, processorArr } = await useProcessor();
 
-        await doProcess(`admin/company/mail/search/${domain_id}`, 'GET', null);
+        await doProcess(`admin/company/mail/${domain_id}/search`, 'GET', null);
 
         localCompanyMail.formArr = processorArr.value;
 
@@ -144,7 +144,7 @@ export const useCompanyMail = (): UseCompanyMailInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/company/mail/password/${values['id']}`, 'PATCH', values);
+        await doProcess(`admin/company/mail/${values['id']}/password`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -169,7 +169,7 @@ export const useCompanyMail = (): UseCompanyMailInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/company/mail/profile/${values['domain']}/${values['id']}`, 'PATCH', values);
+        await doProcess(`admin/company/mail/${values['id']}/edit/${values['domain']}`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -204,7 +204,7 @@ export const useCompanyMail = (): UseCompanyMailInterface => {
         formObj,
         formSuccess,
         getChoices,
-        getProfile,
+        getEdit,
         getSearch,
         updatePassword,
         updateProfile

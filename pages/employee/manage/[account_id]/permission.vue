@@ -2,8 +2,6 @@
         setup>
 import VueMultiselect from "vue-multiselect";
 
-import { number, object, string } from "yup";
-
 const { hasAccess, hasPermForm } = useAuthorization();
 
 const {
@@ -18,19 +16,6 @@ const {
 const route = useRoute();
 
 const selected: any = ref([]);
-
-const schema = object({
-    address: string().required(),
-    city: string().required(),
-    country: string().required(),
-    email: string().required().email(),
-    first_name: string().required(),
-    last_name: string().required(),
-    primary_phone: number().required().positive().integer(),
-    secondary_phone: number().positive().integer().nullable(),
-    state: string().required(),
-    zipcode: string().required()
-});
 
 definePageMeta({
     description: 'Employee Permissions',

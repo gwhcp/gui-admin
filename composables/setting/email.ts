@@ -18,7 +18,7 @@ interface UseSettingEmailInterface {
     }>;
     formSuccess: ComputedRef<boolean>;
     getChoices: () => Promise<void>;
-    getProfile: (id: string) => Promise<void>;
+    getEdit: (email_id: string) => Promise<void>;
     getSearch: () => Promise<void>;
     updateProfile: (values: Record<string, string>, actions: {
         setErrors: (arg0: Record<string, unknown>) => void
@@ -68,7 +68,7 @@ export const useSettingEmail = (): UseSettingEmailInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/setting/email/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/setting/email/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localSettingEmail.formErrors = processorErrors.value;
@@ -111,12 +111,12 @@ export const useSettingEmail = (): UseSettingEmailInterface => {
         localSettingEmail.choices = processorObj.value;
     };
 
-    const getProfile = async (id: string) => {
+    const getEdit = async (email_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/setting/email/profile/${id}`, 'GET', null);
+        await doProcess(`admin/setting/email/${email_id}/edit`, 'GET', null);
 
         localSettingEmail.formObj = processorObj.value;
 
@@ -156,7 +156,7 @@ export const useSettingEmail = (): UseSettingEmailInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/setting/email/profile/${values['email']}`, 'PATCH', values);
+        await doProcess(`admin/setting/email/${values['email']}/edit`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -183,7 +183,7 @@ export const useSettingEmail = (): UseSettingEmailInterface => {
         formObj,
         formSuccess,
         getChoices,
-        getProfile,
+        getEdit,
         getSearch,
         updateProfile
     };

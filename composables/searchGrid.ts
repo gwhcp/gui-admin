@@ -3,6 +3,7 @@ import { ComputedRef } from "vue";
 interface UseSearchGridInterface {
     cellInvoiceType: (params: string) => object;
     cellParams: ComputedRef<Record<string, unknown>>;
+    cellOrderStatus: object;
     cellSelected: ComputedRef<boolean>;
     cellQueueStatus: (params: string) => object;
     cellQueueType: (params: string) => object;
@@ -19,7 +20,9 @@ interface UseSearchGridInterface {
     formatActiveStatus: (params: string) => string;
     formatDate: (params: string) => string;
     formatInTestModeStatus: (params: string) => string;
+    formatInvoiceAmount: (params: string) => string;
     formatInvoiceType: (params: string) => string;
+    formatOrderStatus: (params: string) => string;
     formatQueueStatus: (params: string) => string;
     formatTransactionType: (params: string) => string;
     selectionClear: () => void;
@@ -43,6 +46,23 @@ export const useSearchGrid = (): UseSearchGridInterface => {
             return { color: '#0D6EFD' };
         } else {
             return { color: '#FFC107' };
+        }
+    };
+
+    const cellOrderStatus = (params: any) => {
+        switch (params.value.toLowerCase()) {
+            case 'call':
+                return { color: '#0DCAF0' };
+            case 'cancelled':
+                return { color: '#DDDDDD' };
+            case 'fraud':
+                return { color: '#DC3545' };
+            case 'unverified':
+                return { color: '#FFC107' };
+            case 'valid':
+                return { color: '#198754' };
+            default:
+                return { color: '#000000' };
         }
     };
 
@@ -86,8 +106,6 @@ export const useSearchGrid = (): UseSearchGridInterface => {
     const cellTransactionType = (params: any) => {
         if (params.value == 'auth_capture') {
             return { color: '#198754' };
-        } else if (params.value == 'auth_only') {
-            return { color: '#DC3545' };
         } else if (params.value == 'refund') {
             return { color: '#0D6EFD' };
         } else {
@@ -156,6 +174,14 @@ export const useSearchGrid = (): UseSearchGridInterface => {
         return (params.data['in_test_mode'] ? 'Active' : 'Suspended');
     };
 
+    const formatInvoiceAmount = (params: any) => {
+        if (params.data['invoice_type'] === 'debit') {
+            return `-$${params.data['amount']}`;
+        } else {
+            return `$${params.data['amount']}`;
+        }
+    };
+
     const formatInvoiceType = (params: any) => {
         if (params.value === 'charge') {
             return 'Charge';
@@ -165,6 +191,25 @@ export const useSearchGrid = (): UseSearchGridInterface => {
             return 'Refund';
         } else {
             return 'Void';
+        }
+    };
+
+    const formatOrderStatus = (params: any) => {
+        switch (params.value.toLowerCase()) {
+            case 'call':
+                return 'Call & Void';
+            case 'cancelled':
+                return 'Cancelled';
+            case 'fraud':
+                return 'Fraud';
+            case 'new':
+                return 'New';
+            case 'unverified':
+                return 'Unverified';
+            case 'valid':
+                return 'Valid';
+            default:
+                return 'Unknown';
         }
     };
 
@@ -179,8 +224,6 @@ export const useSearchGrid = (): UseSearchGridInterface => {
     const formatTransactionType = (params: any) => {
         if (params.value === 'auth_capture') {
             return 'Authorize & Capture';
-        } else if (params.value == 'auth_only') {
-            return 'Authorize Only';
         } else if (params.value == 'refund') {
             return 'Refund';
         } else {
@@ -208,6 +251,7 @@ export const useSearchGrid = (): UseSearchGridInterface => {
 
     return {
         cellInvoiceType,
+        cellOrderStatus,
         cellParams,
         cellSelected,
         cellQueueStatus,
@@ -218,7 +262,9 @@ export const useSearchGrid = (): UseSearchGridInterface => {
         filterDnsResults,
         filterString,
         formatDate,
+        formatInvoiceAmount,
         formatInvoiceType,
+        formatOrderStatus,
         formatQueueStatus,
         formatActiveStatus,
         formatInTestModeStatus,

@@ -31,7 +31,15 @@ const props = defineProps({
 
 const router = useRouter();
 
-const modalDelete = () => {
+/**
+ * Executes the delete function specified in `props.deleteFunction` and handles the result.
+ * If the result is `false`, displays an error alert with the specified `props.messageError` message.
+ * If the result is `true`, displays a success alert with the specified `props.messageSuccess` message,
+ * and redirects the user to the specified `props.redirect` path.
+ *
+ * @returns {void}
+ */
+const modalDelete = (): void => {
     const can_delete = props.deleteFunction(props.params);
 
     const msg = can_delete.then((result: boolean) => {

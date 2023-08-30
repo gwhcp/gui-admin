@@ -10,7 +10,6 @@ interface UseCompanyDomainInterface {
     formObj: ComputedRef<{
         account: null | number;
         date_from: string;
-        id: number;
         in_queue: boolean;
         ipaddress_pool: null | number;
         is_active: boolean;
@@ -20,7 +19,7 @@ interface UseCompanyDomainInterface {
         related_to: null | number;
     }>;
     formSuccess: ComputedRef<boolean>;
-    getProfile: (id: string) => Promise<void>;
+    getEdit: (domain_id: string) => Promise<void>;
     getSearch: () => Promise<void>;
 }
 
@@ -63,7 +62,7 @@ export const useCompanyDomain = (): UseCompanyDomainInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/company/domain/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/company/domain/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localCompanyDomain.formErrors = processorErrors.value;
@@ -98,12 +97,12 @@ export const useCompanyDomain = (): UseCompanyDomainInterface => {
         return localCompanyDomain.formSuccess;
     });
 
-    const getProfile = async (id: string) => {
+    const getEdit = async (domain_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/company/domain/profile/${id}`, 'GET', null);
+        await doProcess(`admin/company/domain/${domain_id}/edit`, 'GET', null);
 
         localCompanyDomain.formObj = processorObj.value;
 
@@ -128,7 +127,6 @@ export const useCompanyDomain = (): UseCompanyDomainInterface => {
         formObj: {
             account: 0,
             date_from: '',
-            id: 0,
             in_queue: false,
             ipaddress_pool: null,
             is_active: false,
@@ -147,7 +145,7 @@ export const useCompanyDomain = (): UseCompanyDomainInterface => {
         formErrors,
         formObj,
         formSuccess,
-        getProfile,
+        getEdit,
         getSearch
     };
 };

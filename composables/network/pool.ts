@@ -24,7 +24,7 @@ interface UseNetworkPoolInterface {
     }>;
     formSuccess: ComputedRef<boolean>;
     getChoices: () => Promise<void>;
-    getProfile: (id: string) => Promise<void>;
+    getEdit: (setup_id: string) => Promise<void>;
     getSearch: () => Promise<void>;
     updateProfile: (values: Record<string, string>, actions: {
         setErrors: (arg0: Record<string, unknown>) => void
@@ -74,7 +74,7 @@ export const useNetworkPool = (): UseNetworkPoolInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/network/pool/delete/${values['id']}`, 'DELETE', null);
+        await doProcess(`admin/network/pool/${values['id']}/delete`, 'DELETE', null);
 
         if (!processorSuccess.value) {
             localNetworkPool.formErrors = processorErrors.value;
@@ -117,12 +117,12 @@ export const useNetworkPool = (): UseNetworkPoolInterface => {
         localNetworkPool.choices = processorObj.value;
     };
 
-    const getProfile = async (id: string) => {
+    const getEdit = async (setup_id: string) => {
         loadingState.isActive = true;
 
         const { doProcess, processorObj } = await useProcessor();
 
-        await doProcess(`admin/network/pool/profile/${id}`, 'GET', null);
+        await doProcess(`admin/network/pool/${setup_id}/edit`, 'GET', null);
 
         localNetworkPool.formObj = processorObj.value;
 
@@ -169,7 +169,7 @@ export const useNetworkPool = (): UseNetworkPoolInterface => {
 
         const { doProcess, processorErrors, processorSuccess } = await useProcessor();
 
-        await doProcess(`admin/network/pool/profile/${values['setup']}`, 'PATCH', values);
+        await doProcess(`admin/network/pool/${values['setup']}/edit`, 'PATCH', values);
 
         if (!processorSuccess.value) {
             actions.setErrors(processorErrors.value);
@@ -196,7 +196,7 @@ export const useNetworkPool = (): UseNetworkPoolInterface => {
         formObj,
         formSuccess,
         getChoices,
-        getProfile,
+        getEdit,
         getSearch,
         updateProfile
     };

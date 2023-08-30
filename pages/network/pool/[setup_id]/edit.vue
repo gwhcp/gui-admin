@@ -4,7 +4,7 @@ import { boolean, object, string } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { choices, formObj, getChoices, getProfile, updateProfile } = useNetworkPool();
+const { choices, formObj, getChoices, getEdit, updateProfile } = useNetworkPool();
 
 const route = useRoute();
 
@@ -22,7 +22,7 @@ definePageMeta({
 onMounted(() => {
     getChoices();
 
-    getProfile(route.params['setup_id'].toString());
+    getEdit(route.params['setup_id'].toString());
 
     hasAccess('admin_network_pool.view_ipaddresssetup');
 

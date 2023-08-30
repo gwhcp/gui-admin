@@ -4,7 +4,7 @@ import { number, object, string } from "yup";
 
 const { hasAccess, hasPermForm } = useAuthorization();
 
-const { formObj: domainObj, getProfile } = useCompanyDomain();
+const { formObj: domainObj, getEdit } = useCompanyDomain();
 
 const { choices, createRecord, formObj, getChoices } = useCompanyDns();
 
@@ -25,7 +25,7 @@ definePageMeta({
 onMounted(() => {
     getChoices();
 
-    getProfile(route.params['domain_id'].toString());
+    getEdit(route.params['domain_id'].toString());
 
     hasAccess('admin_company_dns.view_dnszone');
 
