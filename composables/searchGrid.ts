@@ -108,8 +108,10 @@ export const useSearchGrid = (): UseSearchGridInterface => {
             return { color: '#198754' };
         } else if (params.value == 'refund') {
             return { color: '#0D6EFD' };
-        } else {
+        } else if (params.value == 'void') {
             return { color: '#FFC107' };
+        } else {
+            return { color: '#000000' };
         }
     };
 
@@ -189,8 +191,10 @@ export const useSearchGrid = (): UseSearchGridInterface => {
             return 'Debit';
         } else if (params.value == 'refund') {
             return 'Refund';
-        } else {
+        } else if (params.value == 'void') {
             return 'Void';
+        }  else {
+            return '';
         }
     };
 
@@ -226,8 +230,10 @@ export const useSearchGrid = (): UseSearchGridInterface => {
             return 'Authorize & Capture';
         } else if (params.value == 'refund') {
             return 'Refund';
-        } else {
+        } else if (params.value == 'void') {
             return 'Void';
+        } else {
+            return '';
         }
     };
 

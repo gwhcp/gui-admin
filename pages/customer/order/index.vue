@@ -6,7 +6,7 @@ const { formArr, getSearch } = useCustomerOrder();
 
 const route = useRoute();
 
-const { cellParams, cellSelected, cellOrderStatus, filterString, formatOrderStatus } = useSearchGrid();
+const { cellParams, cellSelected, cellOrderStatus, filterDate, filterString, formatDate, formatOrderStatus } = useSearchGrid();
 
 const columnDefs = [
     {
@@ -22,6 +22,13 @@ const columnDefs = [
         filterParams: filterString(),
         valueFormatter: formatOrderStatus,
         cellStyle: cellOrderStatus
+    },
+    {
+        field: 'date_from',
+        headerName: 'Date',
+        filter: 'agDateColumnFilter',
+        filterParams: filterDate(),
+        valueFormatter: formatDate
     }
 ];
 

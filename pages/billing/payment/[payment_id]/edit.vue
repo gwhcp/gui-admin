@@ -9,6 +9,7 @@ const { choices, formObj, getChoices, getEdit, updateProfile } = useBillingPayme
 const route = useRoute();
 
 const schema = object({
+    batch_out: string().required(),
     in_test_mode: boolean(),
     is_active: boolean(),
     login_id: string().required(),
@@ -58,6 +59,11 @@ useHead({
                               :required="true"
                               label="Transaction Key"
                               name="transaction_key"/>
+
+                    <FormText v-model="formObj['batch_out']"
+                              :required="true"
+                              label="Batch Out Time"
+                              name="batch_out"/>
 
                     <FormSwitch v-model="formObj['in_test_mode']"
                                 label="Test Mode"

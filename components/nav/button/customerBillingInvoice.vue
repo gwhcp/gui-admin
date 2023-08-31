@@ -48,7 +48,7 @@ const route = useRoute();
                 <use xlink:href="#magnifying-glass"/>
             </svg>
 
-            Search
+            Invoices
         </NuxtLink>
     </div>
 </template>
