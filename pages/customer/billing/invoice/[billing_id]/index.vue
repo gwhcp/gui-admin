@@ -6,7 +6,7 @@ const { formArr, getSearch } = useCustomerBillingInvoice();
 
 const route = useRoute();
 
-const { cellParams, cellSelected, filterString } = useSearchGrid();
+const { cellParams, cellSelected, filterDate, filterString, formatDate } = useSearchGrid();
 
 const columnDefs = [
     {
@@ -20,6 +20,13 @@ const columnDefs = [
         headerName: 'Store Product',
         filter: 'agTextColumnFilter',
         filterParams: filterString()
+    },
+    {
+        field: 'date_from',
+        headerName: 'Date',
+        filter: 'agDateColumnFilter',
+        filterParams: filterDate(),
+        valueFormatter: formatDate
     }
 ];
 
